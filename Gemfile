@@ -57,3 +57,6 @@ gem 'bootstrap', '~> 4.0.0.alpha6'
 
 # Pagination - Will Paginate in Rails 5
 gem 'will_paginate', '>= 3.1'
+
+# Simple Form
+gem 'simple_form'
