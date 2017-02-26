@@ -66,3 +66,9 @@ gem "font-awesome-rails"
 
 # Devise - User Authentication
 gem 'devise'
+
+# Geocoder
+gem 'geocoder'
+
+# Figaro - Add Bing API key to ENV (environment variable)
+gem "figaro"
