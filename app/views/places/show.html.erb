@@ -39,7 +39,7 @@
 </div>
 <div class="clear"></div>
 
-<!-- Modal -->
+<!-- Comment Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -70,6 +70,22 @@
   </button>
 </div>
 
+<%= simple_form_for @photo, url: place_photos_path(@place) do |f| %>
+  <%= f.input :caption %>
+  <%= f.input :picture %>
+  <%= f.submit :photo %>
+<% end %>
+
+<div class="clear">
+<div class="row">
+  <div class="col-12 col-sm-6">
+    <% @place.photos.each do |photo| %>
+      <%= image_tag photo.picture %>
+      <%= photo.caption %>
+    <% end %>
+  </div>
+</div>
+</div>
 <div class="clear"></div>
 <div class="row">
   <% @place.comments.each do |comment| %>

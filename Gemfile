@@ -72,3 +72,9 @@ gem 'geocoder'
 
 # Figaro - Add Bing API key to ENV (environment variable)
 gem "figaro"
+
+#CarrierWave Upload files
+gem 'carrierwave', '~>1.0'
+
+#Fog - Allows carrierwave to communicate with Amazon S3
+gem 'fog'
