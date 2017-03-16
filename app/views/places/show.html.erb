@@ -1,4 +1,4 @@
-<div class="booyah-box col-10 offset">
+<div class="booyah-box col-10-offset-1">
   <h1><%= @place.name %></h1>
   <i><%= @place.address %></i>
   <br /><br />
@@ -30,13 +30,23 @@
   <div id="map"></div>
 <% end %>
   <br />
-  <div class="float-right">
-    <% if current_user && current_user == @place.user %>
-      <%= link_to 'Edit', edit_place_path(@place), class: 'btn btn-primary' %>
-      <%= link_to 'Destroy', place_path(@place), method: :delete, data: {confirm: 'Are you sure you want to delete this?'}, class: 'btn btn-danger' %>
-    <% end %>
-  </div>
+    <div class="pull-right">
+      <% if current_user && current_user == @place.user %>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pictureModal">
+          Add a photo
+        </button>
+        <%= link_to 'Edit', edit_place_path(@place), class: 'btn btn-primary' %>
+        <%= link_to 'Destroy', place_path(@place), method: :delete, data: {confirm: 'Are you sure you want to delete this?'}, class: 'btn btn-danger' %>
+      <% end %>
+    </div>
 </div>
+
+
+
+
+
+
+
 <div class="clear"></div>
 
 <!-- Comment Modal -->
@@ -63,30 +73,59 @@
     </div>
   </div>
 </div>
+
+<!-- Add picture modal -->
+<div class="modal fade" id="pictureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pictureModalLabel">Add a photo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+        <div class="modal-body">
+          <%= simple_form_for @photo, url: place_photos_path(@place) do |f| %>
+            <%= f.input :picture, label: false, placeholder: "Add a photo" %>
+            <%= f.input :caption %>
+            <!-- <div class="btn btn-primary" id="newBtn">Add a photo</div>
+            <input id="html_btn" type="file" /> -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <%= f.submit "Add", class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<br />
+<div class="row">
+  <% @place.photos.each do |photo| %>
+    <figure class="figure col-12 col-sm-6">
+      <%= image_tag photo.picture, class: 'img-fluid figure-img photo' %>
+      <figcaption class="figure-caption text-center">
+        <%= photo.caption %>
+      </figcaption>
+    </figure>
+  <% end %>
+
+
+</div>
+
+
+
 <div class="col-10 offset-1">
   <h1 class="float-left">Comments</h1>
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
     Add a comment
   </button>
 </div>
 
-<%= simple_form_for @photo, url: place_photos_path(@place) do |f| %>
-  <%= f.input :caption %>
-  <%= f.input :picture %>
-  <%= f.submit :photo %>
-<% end %>
 
-<div class="clear">
-<div class="row">
-  <div class="col-12 col-sm-6">
-    <% @place.photos.each do |photo| %>
-      <%= image_tag photo.picture %>
-      <%= photo.caption %>
-    <% end %>
-  </div>
-</div>
-</div>
-<div class="clear"></div>
+
 <div class="row">
   <% @place.comments.each do |comment| %>
     <div class="col-12 col-sm-6">
